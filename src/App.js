@@ -1,16 +1,84 @@
 import "./App.css";
+import Home from "./components/Home.js";
+import CountryCard from "./components/CountryCard.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMoon } from "@fortawesome/free-regular-svg-icons";
+import React, { useState, useEffect } from "react";
+import data from "./data.json";
 
 function App() {
+  const [darkMode, setDarkMode] = useState(true);
+  const [filteredCountry, setFilteredCountry] = useState(data);
+  const [searchInput, setSearchInput] = useState("");
+  const [selectedRegion, setSelectedRegion] = useState("");
+  const [selectedCountry, setSelectedCountry] = useState(null);
+
+  const handleCountryClick = (selectedCountry) => {
+    setSelectedCountry(selectedCountry);
+  };
+
+  useEffect(() => {
+    filterCountries();
+  }, [searchInput, selectedRegion, data]);
+
+  const filterCountries = () => {
+    let filteredData = data;
+    if (searchInput.trim() !== "") {
+      filteredData = filteredData.filter((item) =>
+        item.name.toLowerCase().includes(searchInput.toLowerCase()),
+      );
+    }
+    if (selectedRegion !== "") {
+      filteredData = filteredData.filter(
+        (item) => item.region === selectedRegion,
+      );
+    }
+    setFilteredCountry(filteredData);
+  };
+
+  const handleInputChange = (e) => {
+    setSearchInput(e.target.value);
+  };
+
+  const handleRegionChange = (e) => {
+    setSelectedRegion(e.target.value);
+  };
+  const handleCloseDetail = () => {
+    setSelectedCountry(null);
+  };
+
   return (
-    <div className="App mx-3 font-nunito">
-      <header className="App-header flex justify-between bg-blue-200  text-lg text-darkBlue">
-        <h1 className="font-semibold ">Where in the world?</h1>
+    <main className={darkMode ? "" : "dark"}>
+      <div className="App relative h-screen bg-veryLightGray font-nunito xl:px-40 dark:bg-veryDarkBlueDark  dark:text-white">
+        <header className="bg-white px-1.5 py-5 text-lg text-darkBlue xm:mx-0 xm:px-4 md:px-10 xl:-mx-40 xl:px-40 dark:bg-darkBlue dark:text-white">
+          <div className="flex justify-between ">
+            <h1 className="font-semibold">Where in the world?</h1>
+            <div
+              onClick={() => setDarkMode(!darkMode)}
+              className="flex cursor-pointer place-content-center items-center space-x-1"
+            >
+              <FontAwesomeIcon icon={faMoon} />
+              <p className="font-medium">Dark Mode</p>
+            </div>
+          </div>
+        </header>
         <div>
-          <img />
-          <p className="font-medium">Dark Mode</p>
+          {selectedCountry !== null && typeof selectedCountry === "object" ? (
+            <CountryCard
+              country={selectedCountry}
+              onClose={handleCloseDetail}
+            />
+          ) : (
+            <Home
+              country={filteredCountry}
+              handleCountryClick={handleCountryClick}
+              handleInputChange={handleInputChange}
+              handleRegionChange={handleRegionChange}
+            />
+          )}
         </div>
-      </header>
-    </div>
+      </div>
+    </main>
   );
 }
 

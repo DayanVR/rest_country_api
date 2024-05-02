@@ -44,7 +44,6 @@ function App() {
   const handleRegionChange = (e) => {
     setSelectedRegion(e.target.value);
     setCurrentPage(1);
-    console.log(currentPage);
   };
   const handleCloseDetail = () => {
     setSelectedCountry(null);
@@ -88,7 +87,7 @@ function App() {
               handleCountryClick={handleCountryClick}
               handleInputChange={handleInputChange}
               handleRegionChange={handleRegionChange}
-              currentPage={currentPage} 
+              currentPage={currentPage}
               setCurrentPage={setCurrentPage}
             />
           )}

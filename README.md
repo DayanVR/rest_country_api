@@ -1,3 +1,5 @@
 I developed a user-friendly website that offers an immersive experience for discovering information about various countries. Users can effortlessly search for specific countries, apply region-based filters, and delve into detailed data by clicking on their country of interest. This project seamlessly integrates a toggle dark mode feature, enhancing user experience and accessibility.
 
 The platform aims to provide an informative and practical resource on world geography while prioritizing functionality and ease of navigation. To optimize data organization and retrieval, I structured the information using a data.json file, ensuring efficient access and management
+
+The website was developed using Tailwind CSS for efficient styling and responsiveness, Font Awesome icons for visual cues, and Flowbite React components for interactive elements like pagination. These tools collectively contributed to a modern, user-friendly design for exploring global data effortlessly.

@@ -1,15 +1,35 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { Pages } from "./Pagination";
+import { useEffect, useState } from "react";
 
-function Home({ country, handleCountryClick, handleInputChange, handleRegionChange }) {
-    const regions = ["Africa", "Americas", "Asia", "Europe", "Oceania"];
+function Home({
+  country,
+  handleCountryClick,
+  handleInputChange,
+  handleRegionChange,
+  currentPage,
+  setCurrentPage,
+}) {
+  const [visibleCountries, setVisibleCountries] = useState([]);
+
+  const pageSize = 12;
+
+  const regions = ["Africa", "Americas", "Asia", "Europe", "Oceania"];
+
   const handleClick = (selectedCountry) => {
     handleCountryClick(selectedCountry);
   };
 
+  useEffect(() => {
+    const start = (currentPage - 1) * pageSize;
+    const end = start + pageSize;
+    setVisibleCountries(country.slice(start, end));
+  }, [country, currentPage]);
+
   return (
     <>
-      <div className="bg-veryLightGray py-6 text-home last:items-start max-md:px-3 md:mx-0 md:flex md:py-10 xl:-mx-40 dark:bg-veryDarkBlueDark">
+      <section className="bg-veryLightGray py-6 text-home last:items-start max-md:px-3 md:mx-0 md:flex md:py-10 xl:-mx-40 dark:bg-veryDarkBlueDark">
         <form className="mx-2 flex flex-1 items-center bg-inherit bg-white p-4 text-darkGray md:mx-10 xl:mx-40 2xl:mr-[30%] dark:bg-darkBlue">
           <FontAwesomeIcon
             icon={faMagnifyingGlass}
@@ -18,14 +38,14 @@ function Home({ country, handleCountryClick, handleInputChange, handleRegionChan
           <input
             onChange={handleInputChange}
             type="text"
-            className="size-full border-4 border-none pl-4 outline-none dark:bg-darkBlue dark:text-white dark:placeholder:text-white"
+            className="size-full border-none pl-4 focus:outline-none dark:bg-darkBlue dark:text-white dark:placeholder:text-white"
             placeholder="Search for a country..."
           />
         </form>
-        <div className="custom-select mx-2 flex w-60 bg-white p-2 pr-6 max-md:mt-8 md:mx-10 xl:mx-40 dark:bg-darkBlue">
+        <div className="mx-2 flex bg-white p-2 max-md:mt-8 md:mx-10 md:w-60 xl:mx-40 dark:bg-darkBlue">
           <select
             onChange={handleRegionChange}
-            className="float-start w-full cursor-pointer border-none py-3 pl-4 outline-none dark:bg-darkBlue "
+            className="float-start w-full border-none py-3 pl-4 outline-none dark:bg-darkBlue "
           >
             <option value="">Filter by Region</option>
             {regions.map((region, index) => (
@@ -35,14 +55,21 @@ function Home({ country, handleCountryClick, handleInputChange, handleRegionChan
             ))}
           </select>
         </div>
-      </div>
+      </section>
+      <section>
+        <Pages
+          totalPages={Math.ceil(country.length / pageSize)}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+        />
+      </section>
       <section className="-mx-1 h-fit bg-veryLightGray pb-20 pt-1 md:mx-0 xl:-mx-40 dark:bg-veryDarkBlueDark ">
-        <div className="mx-6 grid gap-x-20 gap-y-10 text-detail md:mx-10 md:mt-14 md:grid-cols-2 xl:mx-40 xl:grid-cols-3 2xl:grid-cols-4">
-          {country.map((country, index) => (
+        <div className="mx-6 grid gap-x-20 gap-y-10 text-detail md:mx-10 md:grid-cols-2 xl:mx-40 xl:grid-cols-3 2xl:grid-cols-4">
+          {visibleCountries.map((country, index) => (
             <div
               onClick={() => handleClick(country)}
               key={index}
-              className="flex h-full w-full cursor-pointer flex-col rounded-lg bg-white pb-4 text-left text-veryDarkBlueLight dark:bg-darkBlue dark:text-white"
+              className="flex h-full w-full cursor-pointer flex-col rounded-lg bg-white pb-4 text-left text-veryDarkBlueLight transition-transform md:hover:scale-105 lg:duration-200 lg:hover:scale-110 2xl:hover:scale-105 dark:bg-darkBlue dark:text-white"
             >
               <img
                 src={country.flag}
@@ -71,6 +98,11 @@ function Home({ country, handleCountryClick, handleInputChange, handleRegionChan
             </div>
           ))}
         </div>
+        <Pages
+          totalPages={Math.ceil(country.length / pageSize)}
+          setCurrentPage={setCurrentPage}
+          currentPage={currentPage}
+        />
       </section>
     </>
   );

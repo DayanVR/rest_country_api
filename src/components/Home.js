@@ -64,14 +64,14 @@ function Home({
         />
       </section>
       <section className="-mx-1 h-fit bg-veryLightGray pb-20 pt-1 md:mx-0 xl:-mx-40 dark:bg-veryDarkBlueDark ">
-        <div className="mx-6 grid gap-x-20 gap-y-10 text-detail md:mx-10 md:grid-cols-2 xl:mx-40 xl:grid-cols-3 2xl:grid-cols-4">
+        <div className="mx-6 grid gap-x-20 gap-y-10 text-detail md:mx-10 md:grid-cols-2 xl:mx-40 xl:grid-cols-3 [&_h3]:2xl:text-2xl [&_p]:2xl:text-xl">
           {visibleCountries.map((country, index) => (
             <div
               onClick={() => handleClick(country)}
               key={index}
-              className="flex h-full w-full cursor-pointer flex-col text-pretty rounded-lg bg-white pb-4 text-left text-veryDarkBlueLight transition-transform md:hover:scale-105 lg:mx-auto lg:w-[350px] lg:duration-200 xl:w-[300px] 2xl:w-full dark:bg-darkBlue dark:text-white"
+              className="flex h-full w-full cursor-pointer flex-col text-pretty rounded-lg bg-white pb-4 text-left text-veryDarkBlueLight transition-transform md:hover:scale-105 lg:mx-auto lg:w-[350px] lg:duration-200 xl:w-full 2xl:max-w-[550px] dark:bg-darkBlue dark:text-white"
             >
-              <div className="relative h-40 w-full lg:h-52 ">
+              <div className="relative h-40 w-full lg:h-52 2xl:h-72 ">
                 <img
                   src={country.flag}
                   className="size-full rounded-t-lg object-cover"

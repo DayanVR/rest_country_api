@@ -51,8 +51,11 @@ function App() {
 
   return (
     <main className={darkMode ? "" : "dark"}>
-      <div className="App relative h-screen bg-veryLightGray font-nunito xl:px-40 dark:bg-veryDarkBlueDark  dark:text-white">
-        <header className="bg-white px-1.5 py-5 text-lg text-darkBlue xm:mx-0 xm:px-4 md:px-10 xl:-mx-40 xl:px-40 dark:bg-darkBlue dark:text-white">
+      <div
+        style={{ scrollbarGutter: "stable" }}
+        className="App relative h-screen overflow-y-auto overflow-x-hidden bg-veryLightGray font-nunito xl:px-40 dark:bg-veryDarkBlueDark  dark:text-white"
+      >
+        <header className="bg-white px-1.5 py-5 text-lg text-darkBlue xm:mx-0 xm:px-4 md:px-10 xl:-mx-44 xl:px-44 dark:bg-darkBlue dark:text-white">
           <div className="flex justify-between ">
             <h1 className="font-semibold">Where in the world?</h1>
             {darkMode && (

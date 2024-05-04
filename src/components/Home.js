@@ -69,31 +69,45 @@ function Home({
             <div
               onClick={() => handleClick(country)}
               key={index}
-              className="flex h-full w-full cursor-pointer flex-col rounded-lg bg-white pb-4 text-left text-veryDarkBlueLight transition-transform md:hover:scale-105 lg:duration-200 lg:hover:scale-110 2xl:hover:scale-105 dark:bg-darkBlue dark:text-white"
+              className="flex h-full w-full cursor-pointer flex-col text-pretty rounded-lg bg-white pb-4 text-left text-veryDarkBlueLight transition-transform md:hover:scale-105 lg:mx-auto lg:w-[350px] lg:duration-200 xl:w-[300px] 2xl:w-full dark:bg-darkBlue dark:text-white"
             >
-              <img
-                src={country.flag}
-                className="rounded-t-lg xl:h-3/6"
-                alt=""
-              />
+              <div className="relative h-40 w-full lg:h-52 ">
+                <img
+                  src={country.flag}
+                  className="size-full rounded-t-lg object-cover"
+                  alt=""
+                />
+              </div>
               <article className="mx-6">
                 <h2 className="my-5 text-2xl font-semibold text-veryDarkBlueLight dark:text-white ">
                   {country.name}
                 </h2>
-                <h3 className="inline font-medium">Population: </h3>
-                <p className="inline font-regular ">
-                  {" "}
-                  {Intl.NumberFormat("en-US").format(country.population)}
-                </p>
-                <br />
+                {country?.population && (
+                  <>
+                    <h3 className="inline font-medium">Population: </h3>
+                    <p className="inline font-regular ">
+                      {" "}
+                      {Intl.NumberFormat("en-US").format(country.population)}
+                    </p>
+                    <br />
+                  </>
+                )}
 
-                <h3 className="inline font-medium ">Region: </h3>
-                <p className="inline font-regular ">{country.region}</p>
-                <br />
+                {country?.region && (
+                  <>
+                    <h3 className="inline font-medium ">Region: </h3>
+                    <p className="inline font-regular ">{country.region}</p>
+                    <br />
+                  </>
+                )}
 
-                <h3 className="inline font-medium">Capital: </h3>
-                <p className="inline font-regular">{country.capital}</p>
-                <br />
+                {country?.capital && (
+                  <>
+                    <h3 className="inline font-medium">Capital: </h3>
+                    <p className="inline font-regular">{country.capital}</p>
+                    <br />
+                  </>
+                )}
               </article>
             </div>
           ))}

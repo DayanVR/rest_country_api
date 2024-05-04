@@ -17,7 +17,7 @@ const findCountryByCode = (code) => {
 const CountryCard = ({ country, onClose }) => {
   const formattedLanguages = formatLanguages(country.languages);
 
-  const borderCountries = country.borders
+  const borderCountries = country?.borders
     ? country.borders.map((borderCode) => {
         const borderCountry = findCountryByCode(borderCode);
         return borderCountry ? borderCountry.name : null;
@@ -38,7 +38,7 @@ const CountryCard = ({ country, onClose }) => {
           <img
             src={country.flag}
             alt={country.name}
-            className="max-xl:my-5 sm:mx-auto md:size-5/6 xl:size-full"
+            className="max-xl:my-5 sm:mx-auto md:size-4/6 lg:size-3/6 xl:size-full"
           />
         </div>
         <div className="h-fit xl:flex-1 [&_strong]:font-medium">
@@ -51,22 +51,38 @@ const CountryCard = ({ country, onClose }) => {
                 <strong>Native Name: </strong>
                 {country.nativeName}
               </p>
-              <p>
-                <strong>Population: </strong>
-                {Intl.NumberFormat("en-US").format(country.population)}
-              </p>
-              <p>
-                <strong>Region: </strong>
-                {country.region}
-              </p>
-              <p>
-                <strong>Sub Region: </strong>
-                {country.subregion}
-              </p>
-              <p>
-                <strong>Capital: </strong>
-                {country.capital}
-              </p>
+              {country?.population && (
+                <>
+                  <p>
+                    <strong>Population: </strong>
+                    {Intl.NumberFormat("en-US").format(country.population)}
+                  </p>
+                </>
+              )}
+              {country?.region && (
+                <>
+                  <p>
+                    <strong>Region: </strong>
+                    {country.region}
+                  </p>
+                </>
+              )}
+              {country?.subregion && (
+                <>
+                  <p>
+                    <strong>Sub Region: </strong>
+                    {country.subregion}
+                  </p>
+                </>
+              )}
+              {country?.capital && (
+                <>
+                  <p>
+                    <strong>Capital: </strong>
+                    {country.capital}
+                  </p>
+                </>
+              )}
             </div>
             <div className="flex-1">
               <p>
@@ -83,7 +99,7 @@ const CountryCard = ({ country, onClose }) => {
               </p>
             </div>
           </div>
-          {borderCountries.length > 1 && (
+          {borderCountries.length > 0 && (
             <div className="flex flex-row flex-wrap md:space-x-4 xl:mt-8">
               <h2 className="my-2 py-2 font-bold">Border Countries: </h2>
               {borderCountries.map((border, index) => (
